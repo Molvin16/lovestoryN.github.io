@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Сердце для Ники ❤️ Фото + Музыка</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #1a0b0f 0%, #2d131a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', 'Arial', system-ui, sans-serif;
+      overflow: hidden;
+      padding: 1.5rem 1rem;
+      position: relative;
+      height: 100vh;
+    }
+
+    /* ============================================ */
+    /* ФОНОВЫЕ СЕРДЕЧКИ                             */
+    /* ============================================ */
+    .hearts-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-float {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0.3;
+      animation: floatUp linear infinite;
+      color: #ff3b6f;
+      text-shadow: 0 0 10px #ff1a4f, 0 0 20px #ff0a3a;
+      user-select: none;
+      will-change: transform;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(110vh) scale(0.4) rotate(0deg);
+        opacity: 0.1;
+      }
+      20% {
+        opacity: 0.5;
+      }
+      80% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.3) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* ============================================ */
+    /* ВИЗУАЛИЗАТОР (фон)                           */
+    /* ============================================ */
+    #visualizer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* ============================================ */
+    /* ГАЛЕРЕЯ ФОТО (ПЕРЕДНИЙ ПЛАН)                */
+    /* ============================================ */
+    .photo-gallery {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 50;
+      overflow: hidden;
+    }
+
+    .floating-photo-wrapper {
+      position: absolute;
+      left: 50%;
+      top: -20%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: photoFlyDown 8s ease-in-out forwards;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* Анимация: сверху → задержка в центре → вниз */
+    @keyframes photoFlyDown {
+      0% {
+        top: -15%;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.3) rotate(-10deg);
+      }
+      10% {
+        opacity: 0;
+      }
+      20% {
+        top: 50%;
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scale(1) rotate(0deg);
+      }
+      25% {
+        top: 50%;
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scale(1) rotate(0deg);
+      }
+      85% {
+        top: 50%;
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scale(1) rotate(0deg);
+      }
+      90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%) scale(1) rotate(2deg);
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+        transform: translateX(-50%) translateY(0%) scale(0.8) rotate(5deg);
+      }
+    }
+
+    .floating-photo {
+      border-radius: 25px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 
+                  0 0 0 3px rgba(255, 70, 120, 0.3),
+                  0 0 60px rgba(255, 26, 79, 0.2);
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      max-width: 70vw;
+      max-height: 70vh;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Романтическая надпись на фото */
+    .photo-label {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      color: #ffe2eb;
+      font-size: 1.4rem;
+      font-weight: 700;
+      border: 2px solid rgba(255, 77, 122, 0.4);
+      white-space: nowrap;
+      text-shadow: 0 0 30px #ff1a4f, 0 0 60px #ff1a4f;
+      pointer-events: none;
+      animation: labelGlow 2s ease-in-out infinite;
+      max-width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      letter-spacing: 1px;
+      box-shadow: 0 0 40px rgba(255, 26, 79, 0.3);
+    }
+
+    @keyframes labelGlow {
+      0%, 100% { 
+        box-shadow: 0 0 20px rgba(255, 26, 79, 0.2);
+        border-color: rgba(255, 77, 122, 0.4);
+      }
+      50% { 
+        box-shadow: 0 0 50px rgba(255, 26, 79, 0.6), 0 0 80px rgba(255, 26, 79, 0.2);
+        border-color: rgba(255, 77, 122, 0.8);
+      }
+    }
+
+    /* ============================================ */
+    /* ОСНОВНАЯ КАРТОЧКА                            */
+    /* ============================================ */
+    .love-card {
+      position: relative;
+      z-index: 10;
+      max-width: 780px;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: rgba(30, 12, 18, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 56px;
+      padding: 2rem 1.8rem 2.5rem;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 70, 120, 0.25);
+      border: 1px solid rgba(255, 100, 150, 0.15);
+      text-align: center;
+      scrollbar-width: thin;
+      scrollbar-color: #ff3b6f transparent;
+    }
+
+    .love-card::-webkit-scrollbar {
+      width: 4px;
+    }
+    .love-card::-webkit-scrollbar-thumb {
+      background: #ff3b6f;
+      border-radius: 10px;
+    }
+
+    .name-glow {
+      font-size: 3.4rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #ff9aae, #ff4d7a, #ff1a4f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px #ff2a5e, 0 0 60px #ff0040;
+      margin-bottom: 0.4rem;
+    }
+
+    .sub-name {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #ffb0c5;
+      letter-spacing: 6px;
+      margin-bottom: 1.2rem;
+      opacity: 0.9;
+      text-shadow: 0 0 15px #ff3366;
+    }
+
+    /* ============================================ */
+    /* МУЗЫКАЛЬНЫЙ ПЛЕЕР                           */
+    /* ============================================ */
+    .music-section {
+      margin: 0.3rem 0 0.8rem;
+      padding: 0.7rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 100, 150, 0.15);
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.6rem 1.6rem;
+      background: linear-gradient(135deg, #ff4d7a, #ff1a4f);
+      border: none;
+      border-radius: 60px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(255, 26, 79, 0.3);
+      font-family: inherit;
+    }
+
+    .upload-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 30px rgba(255, 26, 79, 0.5);
+    }
+
+    #fileInput, #photoInput {
+      display: none;
+    }
+
+    .track-info {
+      margin-top: 0.5rem;
+      color: #ffb0c5;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4facfe;
+      transition: all 0.3s ease;
+    }
+    .status-dot.playing {
+      background: #43e97b;
+      animation: dotPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.6); opacity: 0.7; }
+    }
+
+    .track-name {
+      color: #ffe2eb;
+      font-weight: 500;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-music {
+      padding: 0.35rem 0.9rem;
+      border: none;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-music:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+    .btn-music:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    .btn-music.primary {
+      background: linear-gradient(135deg, #ff4d7a, #ff1a4f);
+      border: none;
+    }
+    .btn-music.primary:hover {
+      box-shadow: 0 0 30px rgba(255, 26, 79, 0.4);
+    }
+
+    .volume-slider {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.2rem 0.6rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .volume-slider i {
+      color: #ffb0c5;
+      font-size: 0.75rem;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 60px;
+      height: 3px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #ff4d7a, #ff1a4f);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 26, 79, 0.4);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      border: none;
+    }
+
+    .time-display {
+      color: #889;
+      font-size: 0.7rem;
+      font-family: monospace;
+      min-width: 45px;
+      text-align: center;
+    }
+
+    /* ============================================ */
+    /* ЗАГРУЗКА ФОТО                                */
+    /* ============================================ */
+    .photo-upload-area {
+      margin: 0.5rem 0 0.8rem;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 30px;
+      border: 1px dashed rgba(255, 100, 150, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .photo-upload-area:hover {
+      border-color: #ff4d7a;
+      background: rgba(255, 77, 122, 0.08);
+    }
+
+    .photo-upload-area .label {
+      color: #ffb0c5;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .photo-upload-area .label i {
+      font-size: 1.1rem;
+      color: #ff4d7a;
+    }
+
+    .photo-count {
+      color: #889;
+      font-size: 0.75rem;
+      margin-left: 4px;
+    }
+
+    /* ============================================ */
+    /* СЕРДЕЧКИ В БЛОКЕ                            */
+    /* ============================================ */
+    .heart-storm {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.2rem 0.5rem;
+      margin: 1rem 0 1.2rem;
+      padding: 0.3rem;
+      min-height: 50px;
+    }
+
+    .heart-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      display: inline-block;
+      animation: pulseHeart 1.8s infinite alternate ease-in-out;
+      color: #ff2e5f;
+      text-shadow: 0 0 15px #ff004c, 0 0 30px #ff1a4f;
+      transition: 0.15s;
+      cursor: pointer;
+    }
+    .heart-icon:hover {
+      transform: scale(1.6);
+      color: #ff638a;
+      text-shadow: 0 0 40px #ff2a6b;
+    }
+
+    @keyframes pulseHeart {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.25); opacity: 1; }
+    }
+
+    /* ============================================ */
+    /* ТЕКСТ ЛЮБВИ                                  */
+    /* ============================================ */
+    .love-message {
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.6;
+      color: #ffe2eb;
+      background: rgba(80, 20, 40, 0.25);
+      padding: 1rem 0.8rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 80, 130, 0.2);
+      margin: 0.8rem 0 1rem;
+    }
+    .love-message span {
+      background: linear-gradient(45deg, #ff7b9c, #ff3b6f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      text-shadow: 0 0 20px #ff3b6f;
+    }
+
+    .quote-block {
+      font-size: 1rem;
+      color: #ffb0c5;
+      background: rgba(255, 60, 100, 0.08);
+      padding: 0.6rem 1rem;
+      border-radius: 60px;
+      border-left: 3px solid #ff3b6f;
+      border-right: 3px solid #ff3b6f;
+      display: inline-block;
+      font-style: italic;
+    }
+    .quote-block i {
+      color: #ff8aa8;
+      font-weight: 300;
+    }
+
+    /* ============================================ */
+    /* АДАПТИВ                                     */
+    /* ============================================ */
+    @media (max-width: 600px) {
+      .love-card {
+        padding: 1.2rem 1rem 1.8rem;
+        border-radius: 40px;
+        max-height: 90vh;
+      }
+      .name-glow {
+        font-size: 2.4rem;
+        letter-spacing: 2px;
+      }
+      .love-message {
+        font-size: 1.1rem;
+        padding: 0.8rem;
+      }
+      .heart-icon {
+        font-size: 1.3rem;
+      }
+      .controls-row {
+        gap: 0.3rem;
+      }
+      .btn-music {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.75rem;
+      }
+      input[type="range"] {
+        width: 50px;
+      }
+      .photo-upload-area .label {
+        font-size: 0.75rem;
+      }
+      .photo-label {
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+        bottom: 8%;
+      }
+      .floating-photo {
+        max-width: 85vw;
+        max-height: 60vh;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .name-glow {
+        font-size: 2rem;
+      }
+      .love-message {
+        font-size: 1rem;
+      }
+      .heart-icon {
+        font-size: 1.1rem;
+      }
+      .photo-label {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================== -->
+  <!-- 1. ВИЗУАЛИЗАТОР                            -->
+  <!-- ========================================== -->
+  <canvas id="visualizer"></canvas>
+
+  <!-- ========================================== -->
+  <!-- 2. ФОНОВЫЕ СЕРДЕЧКИ                        -->
+  <!-- ========================================== -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- ========================================== -->
+  <!-- 3. ГАЛЕРЕЯ ФОТО (ПЕРЕДНИЙ ПЛАН)            -->
+  <!-- ========================================== -->
+  <div class="photo-gallery" id="photoGallery"></div>
+
+  <!-- ========================================== -->
+  <!-- 4. ОСНОВНАЯ КАРТОЧКА                       -->
+  <!-- ========================================== -->
+  <div class="love-card" id="loveCard">
+
+    <div class="name-glow">Ника</div>
+    <div class="sub-name">❤️ моя вселенная ❤️</div>
+
+    <!-- МУЗЫКА -->
+    <div class="music-section">
+      <button class="upload-btn" id="uploadBtn">
+        <i class="fas fa-music"></i> Загрузить музыку
+      </button>
+      <input type="file" id="fileInput" accept="audio/*" />
+
+      <div class="track-info">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="track-name" id="trackName">🎧 Выберите трек</span>
+      </div>
+
+      <div class="controls-row">
+        <button class="btn-music primary" id="playBtn" disabled>
+          <i class="fas fa-play"></i> <span id="playLabel">Играть</span>
+        </button>
+        <div class="volume-slider">
+          <i class="fas fa-volume-down"></i>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.6" />
+          <i class="fas fa-volume-up"></i>
+        </div>
+      </div>
+      <div class="controls-row" style="margin-top: 0.2rem;">
+        <span class="time-display" id="currentTime">0:00</span>
+        <input type="range" id="progressSlider" min="0" max="100" value="0" step="0.1" style="width: 90px;" />
+        <span class="time-display" id="durationTime">0:00</span>
+      </div>
+    </div>
+
+    <!-- ЗАГРУЗКА ФОТО -->
+    <div class="photo-upload-area" id="photoUploadArea">
+      <div class="label">
+        <i class="fas fa-images"></i>
+        Нажми, чтобы загрузить фото
+        <span class="photo-count" id="photoCount">(0)</span>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" multiple />
+    </div>
+
+    <!-- СЕРДЕЧКИ -->
+    <div class="heart-storm" id="heartStorm"></div>
+
+    <!-- ТЕКСТ -->
+    <div class="love-message">
+      <span>Ты —</span> моё дыхание, <span>мой свет</span>,<br>
+      моя самая <span>бесконечная</span> любовь.<br>
+      Каждое утро — <span>тобой</span>, каждый сон — <span>о тебе</span>.
+    </div>
+
+    <div class="quote-block">
+      <i>«Я люблю тебя сильнее, чем все звёзды во Вселенной»</i> ✦
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. FONT AWESOME                            -->
+  <!-- ========================================== -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- ========================================== -->
+  <!-- 6. СКРИПТЫ                                 -->
+  <!-- ========================================== -->
+  <script>
+    (function() {
+      // ==============================================
+      // 6.1. ФОНОВЫЕ СЕРДЕЧКИ
+      // ==============================================
+      const bgContainer = document.getElementById('heartsBg');
+      const heartSymbols = ['♥', '❤', '💖', '💗', '💘', '❤️‍🔥', '💕', '💞', '❣️', '♥️'];
+
+      for (let i = 0; i < 85; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'heart-float';
+        heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = (1.2 + Math.random() * 2.8) + 'rem';
+        heart.style.animationDuration = (14 + Math.random() * 28) + 's';
+        heart.style.animationDelay = (Math.random() * 18) + 's';
+        heart.style.opacity = 0.15 + Math.random() * 0.35;
+        const hue = 340 + Math.floor(Math.random() * 20);
+        heart.style.color = `hsl(${hue}, ${70 + Math.random() * 30}%, ${55 + Math.random() * 30}%)`;
+        bgContainer.appendChild(heart);
+      }
+
+      // ==============================================
+      // 6.2. СЕРДЕЧКИ В БЛОКЕ
+      // ==============================================
+      const stormContainer = document.getElementById('heartStorm');
+      const stormSymbols = ['♥', '❤', '💖', '💗', '💘', '❤️‍🔥', '💕', '💞', '❣️', '❤️', '💓', '🩷'];
+
+      for (let i = 0; i < 40; i++) {
+        const el = document.createElement('span');
+        el.className = 'heart-icon';
+        el.textContent = stormSymbols[Math.floor(Math.random() * stormSymbols.length)];
+        el.style.animationDelay = (Math.random() * 2.2) + 's';
+        el.style.animationDuration = (1.4 + Math.random() * 1.2) + 's';
+        el.style.fontSize = (1.3 + Math.random() * 1.4) + 'rem';
+        const hue = 340 + Math.floor(Math.random() * 25);
+        el.style.color = `hsl(${hue}, 95%, ${60 + Math.random() * 30}%)`;
+        stormContainer.appendChild(el);
+      }
+
+      // ==============================================
+      // 6.3. МУЗЫКАЛЬНЫЙ ПЛЕЕР
+      // ==============================================
+      const fileInput = document.getElementById('fileInput');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const playBtn = document.getElementById('playBtn');
+      const playLabel = document.getElementById('playLabel');
+      const statusDot = document.getElementById('statusDot');
+      const trackName = document.getElementById('trackName');
+      const volumeSlider = document.getElementById('volumeSlider');
+      const progressSlider = document.getElementById('progressSlider');
+      const currentTimeEl = document.getElementById('currentTime');
+      const durationTimeEl = document.getElementById('durationTime');
+
+      let audio = null;
+      let isPlaying = false;
+      let audioContext = null;
+      let analyser = null;
+      let dataArray = null;
+      let visualizerRunning = false;
+      let animationId = null;
+
+      // ==============================================
+      // 6.4. ВИЗУАЛИЗАТОР
+      // ==============================================
+      const canvas = document.getElementById('visualizer');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      function drawVisualizer() {
+        if (!visualizerRunning) return;
+        ctx.clearRect(0, 0, width, height);
+
+        if (!analyser) {
+          drawDefaultWaves();
+          animationId = requestAnimationFrame(drawVisualizer);
+          return;
+        }
+
+        analyser.getByteFrequencyData(dataArray);
+        const bufferLength = analyser.frequencyBinCount;
+        const barWidth = width / bufferLength * 2.5;
+        let x = 0;
+        const centerY = height / 2;
+        const hueOffset = Date.now() / 10000;
+
+        for (let i = 0; i < bufferLength; i += 2) {
+          const value = dataArray[i];
+          const percent = value / 255;
+          const barHeight = percent * height * 0.4;
+          const hue = (i / bufferLength) * 360 + hueOffset;
+          const lightness = 40 + percent * 40;
+
+          ctx.fillStyle = `hsl(${hue % 360}, 80%, ${lightness}%)`;
+          ctx.shadowColor = `hsl(${hue % 360}, 100%, 60%)`;
+          ctx.shadowBlur = 15;
+          ctx.fillRect(x, centerY - barHeight, barWidth - 1, barHeight);
+          ctx.fillRect(x, centerY, barWidth - 1, barHeight);
+          x += barWidth;
+        }
+
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, centerY);
+        ctx.lineTo(width, centerY);
+        ctx.stroke();
+
+        drawParticles();
+        animationId = requestAnimationFrame(drawVisualizer);
+      }
+
+      function drawDefaultWaves() {
+        const barCount = 60;
+        const barWidth = width / barCount;
+        const centerY = height / 2;
+        const time = Date.now() / 1000;
+
+        for (let i = 0; i < barCount; i++) {
+          const wave = Math.sin(time * 1.5 + i * 0.3) * 0.5 + 0.5;
+          const barHeight = wave * height * 0.2 + 10;
+          const hue = (i / barCount) * 360 + time * 20;
+          ctx.fillStyle = `hsla(${hue % 360}, 70%, 50%, 0.3)`;
+          ctx.shadowBlur = 5;
+          ctx.shadowColor = `hsla(${hue % 360}, 100%, 60%, 0.2)`;
+          ctx.fillRect(i * barWidth, centerY - barHeight / 2, barWidth - 1, barHeight);
+        }
+        ctx.shadowBlur = 0;
+      }
+
+      function drawParticles() {
+        const count = 25;
+        const time = Date.now() / 1000;
+        for (let i = 0; i < count; i++) {
+          const x = (Math.sin(time * 0.5 + i * 2.3) * 0.5 + 0.5) * width;
+          const y = (Math.cos(time * 0.7 + i * 1.7) * 0.5 + 0.5) * height;
+          const size = Math.sin(time + i) * 1.5 + 2;
+          const alpha = Math.sin(time * 0.5 + i) * 0.2 + 0.3;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#ff4d7a';
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+          ctx.beginPath();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+      }
+
+      // ==============================================
+      // 6.5. РАБОТА С АУДИО
+      // ==============================================
+
+      function setupAudio(file) {
+        if (audio) {
+          audio.pause();
+          audio.src = '';
+        }
+
+        audio = new Audio();
+        audio.src = URL.createObjectURL(file);
+        trackName.textContent = '🎵 ' + file.name;
+
+        if (!audioContext) {
+          audioContext = new(window.AudioContext || window.webkitAudioContext)();
+          analyser = audioContext.createAnalyser();
+          analyser.fftSize = 256;
+          dataArray = new Uint8Array(analyser.frequencyBinCount);
+        }
+
+        const source = audioContext.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+        audio.volume = volumeSlider.value;
+
+        playBtn.disabled = false;
+
+        audio.addEventListener('ended', () => {
+          isPlaying = false;
+          updateUI();
+        });
+
+        audio.addEventListener('timeupdate', updateProgress);
+
+        audio.addEventListener('loadedmetadata', () => {
+          durationTimeEl.textContent = formatTime(audio.duration);
+        });
+
+        if (!visualizerRunning) {
+          visualizerRunning = true;
+          drawVisualizer();
+        }
+
+        playAudio();
+        // Запускаем генерацию фото при старте музыки
+        if (photoTimer) clearInterval(photoTimer);
+        photoTimer = setInterval(spawnPhoto, 7000); // 7 секунд между фото
+      }
+
+      function playAudio() {
+        if (!audio) return;
+        if (audioContext && audioContext.state === 'suspended') {
+          audioContext.resume();
+        }
+        audio.play().catch(err => console.warn('Ошибка:', err));
+        isPlaying = true;
+        updateUI();
+        if (photoTimer) clearInterval(photoTimer);
+        photoTimer = setInterval(spawnPhoto, 7000);
+      }
+
+      function pauseAudio() {
+        if (!audio) return;
+        audio.pause();
+        isPlaying = false;
+        updateUI();
+        if (photoTimer) {
+          clearInterval(photoTimer);
+          photoTimer = null;
+        }
+      }
+
+      function togglePlay() {
+        if (!audio) return;
+        if (isPlaying) {
+          pauseAudio();
+        } else {
+          playAudio();
+        }
+      }
+
+      function updateUI() {
+        if (isPlaying) {
+          playLabel.textContent = 'Пауза';
+          playBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+          statusDot.className = 'status-dot playing';
+        } else {
+          playLabel.textContent = 'Играть';
+          playBtn.innerHTML = '<i class="fas fa-play"></i> Играть';
+          statusDot.className = 'status-dot';
+        }
+      }
+
+      function updateProgress() {
+        if (!audio) return;
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressSlider.value = percent;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+      }
+
+      function formatTime(seconds) {
+        if (!seconds || isNaN(seconds)) return '0:00';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+      }
+
+      // ==============================================
+      // 6.6. ФОТОГАЛЕРЕЯ (передний план)
+      // ==============================================
+
+      const photoInput = document.getElementById('photoInput');
+      const photoUploadArea = document.getElementById('photoUploadArea');
+      const photoGallery = document.getElementById('photoGallery');
+      const photoCount = document.getElementById('photoCount');
+
+      let uploadedPhotos = [];
+      let photoTimer = null;
+      let usedIndices = [];
+      let isPhotoShowing = false;
+
+      // Коллекция романтических надписей
+      const loveLabels = [
+        '❤️ Ты — моя вечность',
+        '💕 Бесконечно люблю',
+        '✨ Ты — мой свет',
+        '🌹 Самая красивая',
+        '💖 Моё сердце твоё',
+        '🌟 Ты — моя звезда',
+        '🌸 Ты — мой рай',
+        '💗 С тобой я счастлив',
+        '🌺 Ты — мой цветок',
+        '💞 Любовь навсегда',
+        '🌙 Ты — моя луна',
+        '🔥 Ты — моя страсть',
+        '💝 Ты — мой подарок',
+        '🌈 Ты — моя радуга',
+        '⭐ Ты — моя судьба',
+        '💓 Ты — моё дыхание',
+        '🌅 Ты — мой рассвет',
+        '💘 Любовь с первого взгляда',
+        '🌊 Ты — мой океан',
+        '🎵 Ты — моя мелодия',
+        '💎 Ты — мой бриллиант',
+        '🌻 Ты — моё солнце',
+        '🦋 Ты — моя бабочка',
+        '🌺 Ты — мой цветок жизни',
+        '💫 Ты — моя вселенная'
+      ];
+
+      function getRandomLabel() {
+        return loveLabels[Math.floor(Math.random() * loveLabels.length)];
+      }
+
+      function spawnPhoto() {
+        if (uploadedPhotos.length === 0) return;
+        if (isPhotoShowing) return;
+
+        // Выбираем случайное фото (с ротацией)
+        let index;
+        if (usedIndices.length >= uploadedPhotos.length) {
+          usedIndices = [];
+        }
+        do {
+          index = Math.floor(Math.random() * uploadedPhotos.length);
+        } while (usedIndices.includes(index));
+        usedIndices.push(index);
+
+        const photo = uploadedPhotos[index];
+        isPhotoShowing = true;
+
+        // Создаём контейнер
+        const wrapper = document.createElement('div');
+        wrapper.className = 'floating-photo-wrapper';
+
+        // Случайный размер
+        const size = Math.min(300 + Math.random() * 250, window.innerWidth * 0.6);
+        const sizeMobile = Math.min(200 + Math.random() * 150, window.innerWidth * 0.75);
+        const finalSize = window.innerWidth < 600 ? sizeMobile : size;
+
+        // Создаём изображение
+        const img = document.createElement('img');
+        img.className = 'floating-photo';
+        img.src = photo;
+        img.draggable = false;
+        img.style.width = finalSize + 'px';
+        img.style.height = finalSize + 'px';
+
+        // Создаём надпись
+        const label = document.createElement('div');
+        label.className = 'photo-label';
+        label.textContent = getRandomLabel();
+
+        // Собираем
+        wrapper.appendChild(img);
+        wrapper.appendChild(label);
+        photoGallery.appendChild(wrapper);
+
+        // Случайная задержка перед началом анимации (0-1.5 сек)
+        const delay = Math.random() * 1.5;
+        wrapper.style.animationDelay = delay + 's';
+
+        // Удаляем после завершения анимации (8 сек + задержка + 0.5 сек запас)
+        const totalDuration = 8 + delay + 0.5;
+        setTimeout(() => {
+          if (wrapper.parentNode) {
+            wrapper.remove();
+          }
+          isPhotoShowing = false;
+        }, totalDuration * 1000);
+      }
+
+      // Загрузка фото
+      photoUploadArea.addEventListener('click', () => photoInput.click());
+
+      photoInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length === 0) return;
+
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            uploadedPhotos.push(event.target.result);
+            photoCount.textContent = `(${uploadedPhotos.length})`;
+            // Если фото есть, запускаем показ
+            if (!photoTimer) {
+              photoTimer = setInterval(spawnPhoto, 7000);
+              // Показываем первое фото сразу
+              setTimeout(spawnPhoto, 1000);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+
+        photoInput.value = '';
+      });
+
+      // ==============================================
+      // 6.7. СОБЫТИЯ
+      // ==============================================
+
+      uploadBtn.addEventListener('click', () => fileInput.click());
+
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) setupAudio(file);
+      });
+
+      playBtn.addEventListener('click', togglePlay);
+
+      volumeSlider.addEventListener('input', (e) => {
+        if (audio) audio.volume = parseFloat(e.target.value);
+      });
+
+      progressSlider.addEventListener('input', (e) => {
+        if (audio && audio.duration) {
+          const percent = parseFloat(e.target.value);
+          audio.currentTime = (percent / 100) * audio.duration;
+        }
+      });
+
+      // ==============================================
+      // 6.8. КЛИКИ НА СЕРДЕЧКИ
+      // ==============================================
+
+      const loveMessages = [
+        'Ника, ты — чудо! ❤️',
+        'Ты моя вечность ✨',
+        'Обожаю тебя, Ника! 💕',
+        'Ты — лучшее, что есть в моей жизни',
+        'Каждый миг с тобой — подарок',
+        'Я бесконечно люблю тебя, Ника',
+        'Ты — моя самая светлая звезда',
+        'С тобой я дышу полной грудью',
+        'Ника, ты — моя сила и нежность',
+        'Моё сердце бьётся только для тебя ❤️‍🔥'
+      ];
+
+      function showPopup(msg) {
+        const popup = document.createElement('div');
+        popup.textContent = msg;
+        Object.assign(popup.style, {
+          position: 'fixed',
+          bottom: '25%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'rgba(30, 10, 20, 0.9)',
+          backdropFilter: 'blur(10px)',
+          padding: '1.2rem 2rem',
+          borderRadius: '50px',
+          color: '#ffe2eb',
+          fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+          fontWeight: '600',
+          border: '2px solid #ff3b6f',
+          boxShadow: '0 20px 50px rgba(255, 0, 60, 0.6)',
+          zIndex: '999',
+          textShadow: '0 0 20px #ff1a4f',
+          letterSpacing: '1px',
+          transition: 'all 0.3s ease',
+          fontFamily: 'Segoe UI, Arial, sans-serif',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none'
+        });
+        document.body.appendChild(popup);
+        setTimeout(() => {
+          popup.style.opacity = '0';
+          popup.style.transform = 'translateX(-50%) translateY(20px)';
+          setTimeout(() => popup.remove(), 400);
+        }, 2500);
+      }
+
+      document.querySelectorAll('.heart-icon').forEach(heart => {
+        heart.addEventListener('click', function(e) {
+          e.stopPropagation();
+          showPopup(loveMessages[Math.floor(Math.random() * loveMessages.length)]);
+        });
+      });
+
+      // ==============================================
+      // 6.9. КЛИК НА КАРТОЧКУ - ДОБАВЛЯЕТ СЕРДЕЧКИ
+      // ==============================================
+
+      const card = document.getElementById('loveCard');
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('.heart-icon')) return;
+        if (e.target.closest('.music-section')) return;
+        if (e.target.closest('.photo-upload-area')) return;
+        if (e.target.closest('.love-message')) return;
+        if (e.target.closest('.quote-block')) return;
+
+        for (let i = 0; i < 10; i++) {
+          const newHeart = document.createElement('span');
+          newHeart.className = 'heart-icon';
+          const symbols = ['♥', '❤', '💖', '💗', '💘', '💕', '💞', '❣️'];
+          newHeart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          newHeart.style.fontSize = (1.2 + Math.random() * 2) + 'rem';
+          newHeart.style.animationDelay = (Math.random() * 1.2) + 's';
+          newHeart.style.animationDuration = (1.2 + Math.random() * 1.6) + 's';
+          newHeart.style.color = `hsl(${340 + Math.random() * 30}, 95%, ${60 + Math.random() * 30}%)`;
+          stormContainer.appendChild(newHeart);
+
+          newHeart.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            showPopup(loveMessages[Math.floor(Math.random() * loveMessages.length)]);
+          });
+        }
+      });
+
+      // ==============================================
+      // 6.10. ЗАПУСК
+      // ==============================================
+
+      visualizerRunning = true;
+      drawVisualizer();
+
+      // Если есть фото, запускаем показ через 3 секунды
+      setTimeout(() => {
+        if (uploadedPhotos.length > 0 && !photoTimer) {
+          photoTimer = setInterval(spawnPhoto, 7000);
+          setTimeout(spawnPhoto, 2000);
+        }
+      }, 3000);
+
+      console.log('❤️ Сайт для Ники с фото на переднем плане!');
+      console.log('📸 Фото выпрыгивают сверху, задерживаются в центре на 5-7 секунд и уплывают вниз');
+      console.log('🎵 Загрузи музыку для полного эффекта!');
+
+    })();
+  </script>
+
+</body>
+</html>
